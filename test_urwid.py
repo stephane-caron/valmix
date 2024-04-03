@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import multiprocessing as mp
 from typing import List
 import urwid
 
@@ -16,33 +17,50 @@ palette: List[List[str]] = [
     ("bg 2", "black", "dark cyan", "standout"),
     ("bg 1 smooth", "dark blue", "black"),
     ("bg 2 smooth", "dark cyan", "black"),
+    ("focus heading", "white", "dark red"),
+    ("focus line", "black", "dark red"),
+    ("focus options", "black", "light gray"),
 ]
+
+focus_map = {
+    "heading": "focus heading",
+    "options": "focus options",
+    "line": "focus line",
+}
+
+
+class SelectableColumns(urwid.Columns):
+
+    def __init__(self) -> None:
+        super().__init__([], dividechars=1)
+
+    def open_box(self, box: urwid.Widget) -> None:
+        if self.contents:
+            del self.contents[self.focus_position + 1 :]
+        self.contents.append(
+            (
+                urwid.AttrMap(box, "options", focus_map),
+                self.options(urwid.GIVEN, 24),
+            )
+        )
+        self.focus_position = len(self.contents) - 1
 
 
 class ValueEditor(urwid.WidgetWrap):
 
-    def __init__(self):
+    def __init__(self, values: List[mp.Value]):
         graph = urwid.BarGraph(
             ["bg background", "bg 1", "bg 2"],
             satt={(1, 0): "bg 1 smooth", (2, 0): "bg 2 smooth"},
         )
         graph_wrap = urwid.WidgetWrap(graph)
-        empty_line = urwid.AttrMap(urwid.SolidFill(" "), "contour")
-        window = urwid.Columns(
-            [
-                (urwid.WEIGHT, 2, empty_line),
-                (2, graph_wrap),
-                (urwid.WEIGHT, 2, empty_line),
-                (urwid.WEIGHT, 2, empty_line),
-                (2, graph_wrap),
-                (urwid.WEIGHT, 2, empty_line),
-            ],
-        )
-        window = urwid.LineBox(window)
+        self.columns = SelectableColumns()
+        self.columns.open_box(graph_wrap)
+        self.columns.open_box(graph_wrap)
+        window = urwid.LineBox(self.columns)
         window = urwid.AttrMap(window, "contour")
 
         self.graph = graph
-        self.i = 0
         super().__init__(window)
 
     def main(self):
@@ -51,10 +69,9 @@ class ValueEditor(urwid.WidgetWrap):
         loop.run()
 
     def update(self, loop=None, user_data=None):
-        max_value = 100
-        self.i = (self.i + 0.1) % max_value
+        max_value = 10
         self.graph.set_data(
-            bardata=[[self.i + 0.5]],
+            bardata=[[self.columns.focus_position]],
             top=max_value,
             hlines=[80, 30],
         )
@@ -62,5 +79,7 @@ class ValueEditor(urwid.WidgetWrap):
 
 
 if __name__ == "__main__":
-    editor = ValueEditor()
+    foo = mp.Value("i", 1)
+    bar = mp.Value("i", 12)
+    editor = ValueEditor(values=[foo, bar])
     editor.main()
