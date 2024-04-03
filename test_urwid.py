@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import random
 from typing import List
 import urwid
 
@@ -15,13 +14,18 @@ palette: List[List[str]] = [
     ("bg background", "light gray", "black"),
     ("bg 1", "black", "dark blue", "standout"),
     ("bg 2", "black", "dark cyan", "standout"),
+    ("bg 1 smooth", "dark blue", "black"),
+    ("bg 2 smooth", "dark cyan", "black"),
 ]
 
 
 class ValueEditor(urwid.WidgetWrap):
 
     def __init__(self):
-        graph = urwid.BarGraph(["bg background", "bg 1", "bg 2"])
+        graph = urwid.BarGraph(
+            ["bg background", "bg 1", "bg 2"],
+            satt={(1, 0): "bg 1 smooth", (2, 0): "bg 2 smooth"},
+        )
         graph_wrap = urwid.WidgetWrap(graph)
         empty_line = urwid.AttrMap(urwid.SolidFill(" "), "contour")
         window = urwid.Columns(
@@ -38,6 +42,7 @@ class ValueEditor(urwid.WidgetWrap):
         window = urwid.AttrMap(window, "contour")
 
         self.graph = graph
+        self.i = 0
         super().__init__(window)
 
     def main(self):
@@ -47,8 +52,9 @@ class ValueEditor(urwid.WidgetWrap):
 
     def update(self, loop=None, user_data=None):
         max_value = 100
+        self.i = (self.i + 0.1) % max_value
         self.graph.set_data(
-            bardata=[[100]],
+            bardata=[[self.i + 0.5]],
             top=max_value,
             hlines=[80, 30],
         )
