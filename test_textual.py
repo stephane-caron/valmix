@@ -2,29 +2,38 @@ from typing import List
 
 from textual import events
 from textual.app import App, ComposeResult
-from textual.containers import Center, VerticalScroll, Widget
+from textual.containers import Widget
 from textual.widgets import Button, Footer, Header, ProgressBar, RichLog
 
 
 class ButtonBar(Widget):
 
-    DEFAULT_CSS = """
+    DEFAULT_CSS = r"""
+
     ButtonBar {
-    layout: horizontal;
-    height: 3;
+        height: 3;
+        layout: horizontal;
     }
+
     ButtonBar Button {
-    width: 1fr;
-    margin: 0 2;
+        border: wide green;
+        margin: 0 2;
+        width: 1fr;
     }
+
+    ButtonBar Button:focus {
+        background: $accent;
+    }
+
     ButtonBar ProgressBar {
-    width: 4fr;
-    margin: 1 5;
+        margin: 1 5;
+        width: 4fr;
     }
-    Bar {
-    width: 2fr;
-    height: 3;
+
+    ButtonBar Bar {
+        width: 1fr;
     }
+
     """
 
     def __init__(self, label):
@@ -41,8 +50,6 @@ class Valmix(App):
     BINDINGS = [
         ("q", "quit", "Quit"),
     ]
-
-    CSS_PATH = "valmix.tcss"
 
     TITLE = "Valmix"
 
