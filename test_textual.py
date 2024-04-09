@@ -2,8 +2,38 @@ from typing import List
 
 from textual import events
 from textual.app import App, ComposeResult
-from textual.containers import Center
+from textual.containers import Center, VerticalScroll, Widget
 from textual.widgets import Button, Footer, Header, ProgressBar, RichLog
+
+
+class ButtonBar(Widget):
+
+    DEFAULT_CSS = """
+    ButtonBar {
+    layout: horizontal;
+    height: 3;
+    }
+    ButtonBar Button {
+    width: 1fr;
+    margin: 0 2;
+    }
+    ButtonBar ProgressBar {
+    width: 4fr;
+    margin: 1 5;
+    }
+    Bar {
+    width: 2fr;
+    height: 3;
+    }
+    """
+
+    def __init__(self, label):
+        self.label = label
+        super().__init__()
+
+    def compose(self) -> ComposeResult:
+        yield Button(self.label, id=self.label)
+        yield ProgressBar(total=100, show_eta=False, id=f"{self.label}-bar")
 
 
 class Valmix(App):
@@ -23,10 +53,8 @@ class Valmix(App):
     def compose(self) -> ComposeResult:
         """Create child widgets for the app."""
         yield Header()
-        with Center():
-            for value in self.values:
-                yield Button(value, id=value)
-                yield ProgressBar(total=100, show_eta=False, id=f"{value}-bar")
+        for value_name in self.values:
+            yield ButtonBar(value_name)
         yield RichLog()
         yield Footer()
 

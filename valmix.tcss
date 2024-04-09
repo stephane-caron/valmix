@@ -1,17 +1,15 @@
 Screen {
-    layout: grid;
-    grid-size: 2 2;
-    grid-columns: 1fr;
 }
 
 Button {
-    border: wide;
-}
-
-Button:hover {
-    border: wide $secondary;
+    border: wide green;
+    width: 1fr;
 }
 
 Button:focus {
-    border: wide $accent;
+    background: $accent;
+}
+
+Bar {
+width: 1fr;
 }
