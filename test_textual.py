@@ -1,9 +1,8 @@
 from typing import List
 
-from textual import events
 from textual.app import App, ComposeResult
 from textual.containers import Widget
-from textual.widgets import Button, Footer, Header, ProgressBar, RichLog
+from textual.widgets import Button, Footer, Header, ProgressBar
 
 
 class ButtonBar(Widget):
@@ -47,11 +46,11 @@ class ButtonBar(Widget):
 
 class Valmix(App):
 
+    TITLE = "Valmix"
+
     BINDINGS = [
         ("q", "quit", "Quit"),
     ]
-
-    TITLE = "Valmix"
 
     def __init__(self, values: List[str]) -> None:
         self.values = values
@@ -62,12 +61,7 @@ class Valmix(App):
         yield Header()
         for value_name in self.values:
             yield ButtonBar(value_name)
-        yield RichLog()
         yield Footer()
-
-    def on_key(self, event: events.Key) -> None:
-        self.query_one(RichLog).write(event)
-        self.query_one(RichLog).write(self.focused.id)
 
     def key_left(self) -> None:
         bar_id = f"{self.focused.id}-bar"
