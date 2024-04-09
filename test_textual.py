@@ -26,7 +26,7 @@ class ButtonBar(Widget):
 
     ButtonBar ProgressBar {
         margin: 1 5;
-        width: 4fr;
+        width: 6fr;
     }
 
     ButtonBar Bar {
@@ -40,8 +40,17 @@ class ButtonBar(Widget):
         super().__init__()
 
     def compose(self) -> ComposeResult:
-        yield Button(self.label, id=self.label)
-        yield ProgressBar(total=100, show_eta=False, id=f"{self.label}-bar")
+        self.button = Button(self.label, id=self.label)
+        yield self.button
+
+        self.progress_bar = ProgressBar(
+            total=100,
+            show_eta=False,
+            show_percentage=True,
+            id=f"{self.label}-bar",
+        )
+        self.progress_bar.advance(50)
+        yield self.progress_bar
 
 
 class Valmix(App):
