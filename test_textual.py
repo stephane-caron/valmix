@@ -80,6 +80,12 @@ class Valmix(App):
         bar_id = f"{self.focused.id}-bar"
         self.query_one(f"#{bar_id}").advance(+5)
 
+    def key_up(self) -> None:
+        self.screen.focus_previous()
+
+    def key_down(self) -> None:
+        self.screen.focus_next()
+
 
 if __name__ == "__main__":
     app = Valmix(["foo", "bar"])
