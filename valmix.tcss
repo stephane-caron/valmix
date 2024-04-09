@@ -1,0 +1,17 @@
+Screen {
+    layout: grid;
+    grid-size: 2 2;
+    grid-columns: 1fr;
+}
+
+Button {
+    border: wide;
+}
+
+Button:hover {
+    border: wide $secondary;
+}
+
+Button:focus {
+    border: wide $accent;
+}
