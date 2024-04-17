@@ -1,8 +1,12 @@
+import multiprocessing as mp
 from typing import List
 
+import numpy as np
 from textual.app import App, ComposeResult
 from textual.containers import Widget
-from textual.widgets import Button, Footer, Header, ProgressBar
+from textual.widgets import Button, Footer, Header, Label, ProgressBar
+
+from valmix import Knob
 
 
 class Mixer(Widget):
@@ -25,7 +29,9 @@ class Mixer(Widget):
     }
 
     Mixer ProgressBar {
-        margin: 1 5;
+        margin-left: 5;
+        margin-right: 0;
+        margin-top: 1;
         width: 6fr;
     }
 
@@ -87,5 +93,7 @@ class Valmix(App):
 
 
 if __name__ == "__main__":
-    app = Valmix(["foo", "bar"])
+    foo = Knob("foo", mp.Value("i", 0), range(-10, 10, 3))
+    bar = Knob("bar", mp.Value("i", 0), np.arange(-1.0, 3.0, 0.1))
+    app = Valmix([foo, bar])
     app.run()
