@@ -39,6 +39,12 @@ class Mixer(Widget):
         width: 1fr;
     }
 
+    Mixer Label {
+        margin-left: 0;
+        margin-right: 5;
+        margin-top: 1;
+    }
+
     """
 
     def __init__(self, label):
@@ -58,6 +64,9 @@ class Mixer(Widget):
         self.progress_bar.advance(50)
         yield self.progress_bar
 
+        self.label = Label("0.0", id=f"{self.label}-value")
+        yield self.label
+
 
 class Valmix(App):
 
@@ -67,19 +76,22 @@ class Valmix(App):
         ("q", "quit", "Quit"),
     ]
 
-    def __init__(self, values: List[str]) -> None:
-        self.values = values
+    def __init__(self, knobs: List[Knob]) -> None:
+        self.knobs = {knob.name: knob for knob in knobs}
         super().__init__()
 
     def compose(self) -> ComposeResult:
         yield Header()
-        for value_name in self.values:
-            yield Mixer(value_name)
+        for knob in self.knobs.values():
+            yield Mixer(knob.name)
         yield Footer()
 
     def key_left(self) -> None:
-        bar_id = f"{self.focused.id}-bar"
-        self.query_one(f"#{bar_id}").advance(-5)
+        knob = self.knobs[self.focused.id]
+        progress_bar = self.query_one(f"#{knob.name}-bar")
+        label = self.query_one(f"#{knob.name}-value")
+        progress_bar.advance(-5)
+        label.update("kron")
 
     def key_right(self) -> None:
         bar_id = f"{self.focused.id}-bar"
