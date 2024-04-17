@@ -5,31 +5,31 @@ from textual.containers import Widget
 from textual.widgets import Button, Footer, Header, ProgressBar
 
 
-class ButtonBar(Widget):
+class Mixer(Widget):
 
     DEFAULT_CSS = r"""
 
-    ButtonBar {
+    Mixer {
         height: 3;
         layout: horizontal;
     }
 
-    ButtonBar Button {
+    Mixer Button {
         border: wide green;
         margin: 0 2;
         width: 1fr;
     }
 
-    ButtonBar Button:focus {
+    Mixer Button:focus {
         background: $accent;
     }
 
-    ButtonBar ProgressBar {
+    Mixer ProgressBar {
         margin: 1 5;
         width: 6fr;
     }
 
-    ButtonBar Bar {
+    Mixer Bar {
         width: 1fr;
     }
 
@@ -66,10 +66,9 @@ class Valmix(App):
         super().__init__()
 
     def compose(self) -> ComposeResult:
-        """Create child widgets for the app."""
         yield Header()
         for value_name in self.values:
-            yield ButtonBar(value_name)
+            yield Mixer(value_name)
         yield Footer()
 
     def key_left(self) -> None:
