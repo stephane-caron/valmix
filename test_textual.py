@@ -19,7 +19,8 @@ class Mixer(Widget):
         layout: horizontal;
     }
 
-    Mixer Button {
+    Mixer Button,
+    Mixer Button:enabled, {
         border: wide green;
         margin: 0 2;
         width: 3;
@@ -116,7 +117,7 @@ class Valmix(App):
 
 
 if __name__ == "__main__":
-    foo = Knob("foo", mp.Value("i", 0), range(-10, 10, 3))
-    bar = Knob("bar", mp.Value("f", 0.0), np.arange(-1.0, 3.0, 0.1))
+    foo = Knob("foo", mp.Value("i"), range(-10, 10, 3))
+    bar = Knob("bar", mp.Value("f"), np.arange(-1.0, 3.0, 0.1))
     app = Valmix([foo, bar])
     app.run()
