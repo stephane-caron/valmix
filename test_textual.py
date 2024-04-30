@@ -112,6 +112,6 @@ class Valmix(App):
 
 if __name__ == "__main__":
     foo = Knob("foo", mp.Value("i", 0), range(-10, 10, 3))
-    bar = Knob("bar", mp.Value("i", 0), np.arange(-1.0, 3.0, 0.1))
+    bar = Knob("bar", mp.Value("f", 0.0), np.arange(-1.0, 3.0, 0.1))
     app = Valmix([foo, bar])
     app.run()

@@ -28,6 +28,8 @@ class Knob:
         self.values = sorted(values)
         self.__index = nb_values // 2
         self.__nb_values = nb_values
+        #
+        self.__update_value()
 
     def advance(self, step: int):
         self.__index += step
@@ -35,6 +37,12 @@ class Knob:
             self.__index = self.__nb_values - 1
         elif self.__index < 0:
             self.__index = 0
+        self.__update_value()
+
+    def __update_value(self):
+        new_value = self.values[self.__index]
+        with self.value.get_lock():
+            self.value.value = new_value
 
     @property
     def current_index(self):
@@ -42,7 +50,7 @@ class Knob:
 
     @property
     def current_value(self):
-        return self.values[self.__index]
+        return self.value.value
 
     @property
     def nb_values(self) -> int:
