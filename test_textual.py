@@ -3,6 +3,7 @@ from typing import List
 
 import numpy as np
 from textual.app import App, ComposeResult
+from textual.binding import Binding
 from textual.containers import Widget
 from textual.widgets import Button, Footer, Header, Label, ProgressBar
 
@@ -82,7 +83,11 @@ class Valmix(App):
     TITLE = "Valmix"
 
     BINDINGS = [
-        ("q", "quit", "Quit"),
+        Binding(key="down,j", action="next", description="Next"),
+        Binding(key="up,k", action="previous", description="Previous"),
+        Binding(key="left,h", action="decrease", description="Decrease"),
+        Binding(key="right,l", action="increase", description="Increase"),
+        Binding(key="q", action="quit", description="Quit"),
     ]
 
     def __init__(self, knobs: List[Knob]) -> None:
@@ -95,18 +100,18 @@ class Valmix(App):
             yield Mixer(knob)
         yield Footer()
 
-    def key_left(self) -> None:
+    def action_decrease(self) -> None:
         mixer = self.query_one(f"#{self.focused.id}-mixer")
         mixer.advance(-1)
 
-    def key_right(self) -> None:
+    def action_increase(self) -> None:
         mixer = self.query_one(f"#{self.focused.id}-mixer")
         mixer.advance(+1)
 
-    def key_up(self) -> None:
+    def action_previous(self) -> None:
         self.screen.focus_previous()
 
-    def key_down(self) -> None:
+    def action_next(self) -> None:
         self.screen.focus_next()
 
 
