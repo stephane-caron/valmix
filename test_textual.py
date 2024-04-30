@@ -41,8 +41,9 @@ class Mixer(Widget):
 
     Mixer Label {
         margin-left: 0;
-        margin-right: 5;
+        margin-right: 2;
         margin-top: 1;
+        width: 3;
     }
 
     """
