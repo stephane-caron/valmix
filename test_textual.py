@@ -21,7 +21,7 @@ class Mixer(Widget):
     Mixer Button {
         border: wide green;
         margin: 0 2;
-        width: 1fr;
+        width: 3;
     }
 
     Mixer Button:focus {
@@ -56,7 +56,7 @@ class Mixer(Widget):
         yield self.button
 
         self.progress_bar = ProgressBar(
-            total=self.knob.nb_values,
+            total=self.knob.nb_values - 1,
             show_eta=False,
             show_percentage=True,
             id=f"{self.knob.name}-bar",
@@ -68,8 +68,11 @@ class Mixer(Widget):
         yield self.label
 
     def advance(self, step: int):
+        previous_index = self.knob.current_index
         self.knob.advance(step)
-        self.progress_bar.advance(step)
+        if self.knob.current_index == previous_index:
+            return
+        self.progress_bar.advance(step)  # can advance beyond its total
         self.label.update(repr(self.knob))
 
 
