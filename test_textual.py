@@ -88,19 +88,16 @@ class Valmix(App):
     def compose(self) -> ComposeResult:
         yield Header()
         for knob in self.knobs.values():
-            yield Mixer(knob.name)
+            yield Mixer(knob)
         yield Footer()
 
     def key_left(self) -> None:
-        knob = self.knobs[self.focused.id]
-        progress_bar = self.query_one(f"#{knob.name}-bar")
-        label = self.query_one(f"#{knob.name}-value")
-        progress_bar.advance(-5)
-        label.update("kron")
+        mixer = self.query_one(f"#{self.focused.id}-mixer")
+        mixer.advance(-1)
 
     def key_right(self) -> None:
-        bar_id = f"{self.focused.id}-bar"
-        self.query_one(f"#{bar_id}").advance(+5)
+        mixer = self.query_one(f"#{self.focused.id}-mixer")
+        mixer.advance(+1)
 
     def key_up(self) -> None:
         self.screen.focus_previous()
