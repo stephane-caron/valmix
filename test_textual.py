@@ -47,25 +47,30 @@ class Mixer(Widget):
 
     """
 
-    def __init__(self, label):
-        self.label = label
-        super().__init__()
+    def __init__(self, knob: Knob):
+        self.knob = knob
+        super().__init__(id=f"{knob.name}-mixer")
 
     def compose(self) -> ComposeResult:
-        self.button = Button(self.label, id=self.label)
+        self.button = Button(self.knob.name, id=self.knob.name)
         yield self.button
 
         self.progress_bar = ProgressBar(
-            total=100,
+            total=self.knob.nb_values,
             show_eta=False,
             show_percentage=True,
-            id=f"{self.label}-bar",
+            id=f"{self.knob.name}-bar",
         )
-        self.progress_bar.advance(50)
+        self.progress_bar.advance(self.knob.current_index)
         yield self.progress_bar
 
-        self.label = Label("0.0", id=f"{self.label}-value")
+        self.label = Label(repr(self.knob), id=f"{self.knob.name}-value")
         yield self.label
+
+    def advance(self, step: int):
+        self.knob.advance(step)
+        self.progress_bar.advance(step)
+        self.label.update(repr(self.knob))
 
 
 class Valmix(App):
