@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright 2024 Inria
 
-"""Adjust numerical values with a terminal user interface."""
+"""Adjust numerical values from a terminal user interface."""
 
 from .app import App
 from .knob import Knob
