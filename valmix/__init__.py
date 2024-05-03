@@ -6,10 +6,12 @@
 
 """Adjust numerical values with a terminal user interface."""
 
+from .app import App
 from .knob import Knob
 
 __version__ = "0.0.1"
 
 __all__ = [
+    "App",
     "Knob",
 ]
