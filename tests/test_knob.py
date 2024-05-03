@@ -6,13 +6,15 @@
 
 """Unit tests for the Knob interface."""
 
-import unittest
 import multiprocessing as mp
+import unittest
+
+import numpy as np
 
 from valmix import Knob
 
 
-class TestKnow(unittest.TestCase):
+class TestKnob(unittest.TestCase):
     """Tests the Knob interface."""
 
     def test_available_initial_value(self):
@@ -25,3 +27,16 @@ class TestKnow(unittest.TestCase):
         knob = Knob("v", v, range(5, 15, 3))
         self.assertEqual(knob.current_value, 11)
         self.assertEqual(v.value, 11)
+
+    def test_advance(self):
+        v = mp.Value("f", 12.1)
+        knob = Knob("v", v, np.arange(5, 15, 1.0))
+        self.assertAlmostEqual(knob.current_value, 12.0)
+        self.assertAlmostEqual(v.value, 12.0)
+        knob.advance(+1)
+        self.assertAlmostEqual(knob.current_value, 13.0)
+        self.assertAlmostEqual(v.value, 13.0)
+        knob.advance(-1)
+        knob.advance(-1)
+        self.assertAlmostEqual(knob.current_value, 11.0)
+        self.assertAlmostEqual(v.value, 11.0)
