@@ -31,9 +31,7 @@ class Mixer(Widget):
     }
 
     Mixer ProgressBar {
-        margin-left: 5;
-        margin-right: 0;
-        margin-top: 1;
+        margin: 1 3;
         width: 6fr;
     }
 
@@ -41,11 +39,13 @@ class Mixer(Widget):
         width: 1fr;
     }
 
+    Mixer PercentageStatus {
+        display: none;
+    }
+
     Mixer Label {
-        margin-left: 0;
-        margin-right: 2;
-        margin-top: 1;
-        width: 3;
+        margin: 1 2;
+        width: 8;
     }
 
     """
