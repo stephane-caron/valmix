@@ -45,6 +45,8 @@ name = "valmix"
 
 [tool.ruff]
 line-length = 79
+
+[tool.ruff.lint]
 select = [
     # pyflakes
     "F",
@@ -61,5 +63,5 @@ ignore = [
     "D405",  # British-style section names are also "proper"!
 ]
 
-[tool.ruff.pydocstyle]
+[tool.ruff.lint.pydocstyle]
 convention = "google"
