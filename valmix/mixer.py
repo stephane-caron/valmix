@@ -1,3 +1,9 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+#
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2024 Inria
+
 from textual.app import ComposeResult
 from textual.containers import Widget
 from textual.widgets import Button, Label, ProgressBar

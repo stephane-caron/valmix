@@ -4,6 +4,8 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright 2024 Inria
 
+"""Knob interface."""
+
 import multiprocessing as mp
 from typing import Generic, Sequence, TypeVar
 
@@ -29,6 +31,13 @@ class Knob(Generic[T]):
         value: mp.Value,
         values: Sequence[T],
     ) -> None:
+        """Create a new knob.
+
+        Args:
+            name: Display name of the value.
+            value: Actual multiprocessing synchronized shared object.
+            values: Values the internal value may take.
+        """
         nb_values = len(values)
         self.name = name
         self.value = value
@@ -41,6 +50,11 @@ class Knob(Generic[T]):
         self.__update_value()
 
     def advance(self, step: int) -> None:
+        """Advance to the next value listed when configuring the knob.
+
+        Args:
+            step: Number of steps to add to the list index.
+        """
         self.__index += step
         if self.__index >= self.__nb_values:
             self.__index = self.__nb_values - 1
@@ -63,17 +77,37 @@ class Knob(Generic[T]):
 
     @property
     def current_index(self) -> int:
+        """Get current index in the list of available values.
+
+        Returns:
+            Current index of the knob.
+        """
         return self.__index
 
     @property
     def current_value(self) -> T:
+        """Get current value of the knob.
+
+        Returns:
+            Current value of the knob.
+        """
         return self.value.value
 
     @property
     def nb_values(self) -> int:
+        """Get the number of different values that the knob can take.
+
+        Returns:
+            Number of different values that the knob can take.
+        """
         return self.__nb_values
 
     def __repr__(self) -> str:
+        """Get a string representation of the knob's value.
+
+        Returns:
+            String representation of the current value of the knob.
+        """
         v = self.current_value
         if isinstance(v, float):
             return f"{v:.2}" if 1e-2 <= abs(v) < 100.0 else f"{v:.1e}"
