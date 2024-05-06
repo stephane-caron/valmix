@@ -4,6 +4,8 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright 2024 Inria
 
+"""Mixer widget definition."""
+
 from textual.app import ComposeResult
 from textual.containers import Widget
 from textual.widgets import Button, Label, ProgressBar
@@ -12,6 +14,11 @@ from .knob import Knob
 
 
 class Mixer(Widget):
+    """Widget combining a focus button, a progress bar and a value label.
+
+    Attributes:
+        knob: Knob associated with the widget.
+    """
 
     DEFAULT_CSS = r"""
 
@@ -51,11 +58,19 @@ class Mixer(Widget):
 
     """
 
+    knob: Knob
+
     def __init__(self, knob: Knob):
+        """Create a new widget.
+
+        Args:
+            knob: Knob associated with the widget.
+        """
         self.knob = knob
         super().__init__(id=f"{knob.name}-mixer")
 
     def compose(self) -> ComposeResult:
+        """Render the widget."""
         self.button = Button(self.knob.name, id=self.knob.name)
         yield self.button
 
@@ -72,6 +87,11 @@ class Mixer(Widget):
         yield self.label
 
     def advance(self, step: int):
+        """Advance the underlying knob by a number of steps.
+
+        Args:
+            step: Number of steps to add to advance the knob by.
+        """
         previous_index = self.knob.current_index
         self.knob.advance(step)
         if self.knob.current_index == previous_index:
