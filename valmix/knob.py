@@ -45,7 +45,6 @@ class Knob(Generic[T]):
         self.__index = nb_values // 2
         self.__nb_values = nb_values
         #
-        print(f"{value.value=}")
         self.__snap_to(value.value)
         self.__update_value()
 
