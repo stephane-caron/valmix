@@ -14,7 +14,7 @@ from textual.binding import Binding
 from textual.widgets import Footer, Header
 
 from .knob import Knob
-from .mixer import Mixer
+from .knob_widget import KnobWidget
 
 
 class App(textual.app.App):
@@ -47,7 +47,7 @@ class App(textual.app.App):
         """Compose the application screen."""
         yield Header()
         for knob in self.knobs.values():
-            yield Mixer(knob)
+            yield KnobWidget(knob)
         yield Footer()
 
     def action_decrease(self) -> None:

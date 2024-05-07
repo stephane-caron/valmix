@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright 2024 Inria
 
-"""Mixer widget definition."""
+"""KnobWidget widget definition."""
 
 from textual.app import ComposeResult
 from textual.containers import Widget
@@ -13,7 +13,7 @@ from textual.widgets import Button, Label, ProgressBar
 from .knob import Knob
 
 
-class Mixer(Widget):
+class KnobWidget(Widget):
     """Widget combining a focus button, a progress bar and a value label.
 
     Attributes:
@@ -22,36 +22,36 @@ class Mixer(Widget):
 
     DEFAULT_CSS = r"""
 
-    Mixer {
+    KnobWidget {
         height: 3;
         layout: horizontal;
     }
 
-    Mixer Button,
-    Mixer Button:enabled, {
+    KnobWidget Button,
+    KnobWidget Button:enabled, {
         border: wide green;
         margin: 0 2;
         width: 3;
     }
 
-    Mixer Button:focus {
+    KnobWidget Button:focus {
         background: $accent;
     }
 
-    Mixer ProgressBar {
+    KnobWidget ProgressBar {
         margin: 1 3;
         width: 6fr;
     }
 
-    Mixer Bar {
+    KnobWidget Bar {
         width: 1fr;
     }
 
-    Mixer PercentageStatus {
+    KnobWidget PercentageStatus {
         display: none;
     }
 
-    Mixer Label {
+    KnobWidget Label {
         margin: 1 2;
         width: 8;
     }
