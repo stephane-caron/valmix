@@ -29,7 +29,7 @@ class KnobWidget(Widget):
 
     KnobWidget Button,
     KnobWidget Button:enabled, {
-        border: wide green;
+        border: wide $primary;
         margin: 0 2;
         width: 3;
     }
