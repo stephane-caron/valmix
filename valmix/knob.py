@@ -6,7 +6,7 @@
 
 """Knob interface."""
 
-import multiprocessing as mp
+from multiprocessing.sharedctypes import Synchronized as Value
 from typing import Generic, Sequence, TypeVar
 
 T = TypeVar("T")
@@ -22,13 +22,13 @@ class Knob(Generic[T]):
     """
 
     name: str
-    value: mp.Value
+    value: Value
     values: Sequence
 
     def __init__(
         self,
         name: str,
-        value: mp.Value,
+        value: Value,
         values: Sequence[T],
     ) -> None:
         """Create a new knob.
