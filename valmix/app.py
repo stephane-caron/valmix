@@ -53,16 +53,16 @@ class App(textual.app.App):
     def action_decrease(self) -> None:
         """Decrease currently-selected knob."""
         if self.focused is not None:
-            mixer = self.query_one(f"#{self.focused.id}-mixer")
-            if isinstance(mixer, KnobWidget):  # should be the case
-                mixer.advance(-1)
+            knob = self.query_one(f"#{self.focused.id}-knob")
+            if isinstance(knob, KnobWidget):  # should be the case
+                knob.advance(-1)
 
     def action_increase(self) -> None:
         """Increase currently-selected knob."""
         if self.focused is not None:
-            mixer = self.query_one(f"#{self.focused.id}-mixer")
-            if isinstance(mixer, KnobWidget):  # should be the case
-                mixer.advance(+1)
+            knob = self.query_one(f"#{self.focused.id}-knob")
+            if isinstance(knob, KnobWidget):  # should be the case
+                knob.advance(+1)
 
     def action_previous(self) -> None:
         """Focus previous knob."""

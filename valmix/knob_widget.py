@@ -71,7 +71,7 @@ class KnobWidget(Widget):
         self.knob = knob
         self.label = Label()  # updated by compose()
         self.progress_bar = ProgressBar()  # updated by compose()
-        super().__init__(id=f"{knob.name}-mixer")
+        super().__init__(id=f"{knob.name}-knob")
 
     def compose(self) -> ComposeResult:
         """Render the widget."""
