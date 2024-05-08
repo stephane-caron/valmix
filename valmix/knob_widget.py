@@ -59,6 +59,8 @@ class KnobWidget(Widget):
     """
 
     knob: Knob
+    label: Label
+    progress_bar: ProgressBar
 
     def __init__(self, knob: Knob):
         """Create a new widget.
@@ -67,12 +69,13 @@ class KnobWidget(Widget):
             knob: Knob associated with the widget.
         """
         self.knob = knob
+        self.label = Label()  # updated by compose()
+        self.progress_bar = ProgressBar()  # updated by compose()
         super().__init__(id=f"{knob.name}-mixer")
 
     def compose(self) -> ComposeResult:
         """Render the widget."""
-        self.button = Button(self.knob.name, id=self.knob.name)
-        yield self.button
+        yield Button(self.knob.name, id=self.knob.name)
 
         self.progress_bar = ProgressBar(
             total=self.knob.nb_values - 1,
