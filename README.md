@@ -26,10 +26,6 @@ pip install valmix
 
 ...
 
-## How can I help?
-
-Install the library and use it! Report bugs in the [issue tracker](https://github.com/stephane-caron/pink/issues). If you are a developer with some robotics experience looking to hack on open source, check out the [contribution guidelines](CONTRIBUTING.md).
-
 ## See also
 
 Software:
