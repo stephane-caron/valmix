@@ -12,7 +12,7 @@ from .app import App
 from .knob import Knob
 
 
-def run(self, knobs: List[Knob]) -> None:
+def run(knobs: List[Knob]) -> None:
     """Convenience function to run the app directly from the valmix module.
 
     Args:
