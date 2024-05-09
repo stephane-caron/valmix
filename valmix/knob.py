@@ -109,5 +109,5 @@ class Knob(Generic[T]):
         """
         v = self.current_value
         if isinstance(v, float):
-            return f"{v:.2}" if 1e-2 <= abs(v) < 100.0 else f"{v:.1e}"
+            return f"{v:.2f}" if 1e-2 <= abs(v) < 100.0 else f"{v:.1e}"
         return str(self.current_value)
