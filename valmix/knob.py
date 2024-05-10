@@ -21,10 +21,6 @@ class Knob(Generic[T]):
         values: Values the internal value may take.
     """
 
-    name: str
-    value: Value
-    values: Sequence
-
     def __init__(
         self,
         name: str,
@@ -39,14 +35,35 @@ class Knob(Generic[T]):
             values: Values the internal value may take.
         """
         nb_values = len(values)
-        self.name = name
-        self.value = value
-        self.values = sorted(values)
+        initial_value = value.value
         self.__index = nb_values // 2
+        self.__mp_value = value
+        self.__name = name
         self.__nb_values = nb_values
+        self.__values = sorted(values)
         #
-        self.__snap_to(value.value)
-        self.__update_value()
+        self.__snap_to(initial_value)
+        self.__update_mp_value()
+
+    def __snap_to(self, snap_value: T) -> None:
+        """Snap to available value closest to a given one.
+
+        Args:
+            snap_value: Quantity to get close to using values from the set.
+        """
+        self.__index = 0
+        best_dist = abs(self.__values[0] - snap_value)
+        for i in range(1, self.__nb_values):
+            cur_dist = abs(self.__values[i] - snap_value)
+            if cur_dist < best_dist:
+                self.__index = i
+                best_dist = cur_dist
+
+    def __update_mp_value(self) -> None:
+        """Update internal multiprocessing value from current index."""
+        new_value = self.__values[self.__index]
+        with self.__mp_value.get_lock():
+            self.__mp_value.value = new_value
 
     def advance(self, step: int) -> None:
         """Advance to the next value listed when configuring the knob.
@@ -59,20 +76,7 @@ class Knob(Generic[T]):
             self.__index = self.__nb_values - 1
         elif self.__index < 0:
             self.__index = 0
-        self.__update_value()
-
-    def __snap_to(self, snap_value: T) -> None:
-        self.__index = 0
-        cur_value = self.values[0]
-        for i in range(self.__nb_values):
-            if abs(self.values[i] - snap_value) < abs(cur_value - snap_value):
-                self.__index = i
-                cur_value = self.values[i]
-
-    def __update_value(self) -> None:
-        new_value = self.values[self.__index]
-        with self.value.get_lock():
-            self.value.value = new_value
+        self.__update_mp_value()
 
     @property
     def current_index(self) -> int:
@@ -90,7 +94,12 @@ class Knob(Generic[T]):
         Returns:
             Current value of the knob.
         """
-        return self.value.value
+        return self.__mp_value.value
+
+    @property
+    def name(self) -> str:
+        """Knob name to display."""
+        return self.__name
 
     @property
     def nb_values(self) -> int:
