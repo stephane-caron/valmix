@@ -34,7 +34,7 @@ import time
 
 def main(kp: mp.Value, kd: mp.Value):
     with open("/tmp/output", "w") as output:
-        for _ in range(15):
+        for _ in range(100):
             u = np.clip(kp.value * 1.0 + kd.value * 0.1, 5.0, 20.0)
             output.write(f"{u}\n")
             output.flush()
@@ -57,6 +57,12 @@ Finally, run your program and Valmix together, specifying the tuning range for e
         }
     )
 ```
+
+This will fire up a terminal user interface (TUI) where you can tune ``kp`` and ``kd`` while the program runs in the background:
+
+![image](https://github.com/stephane-caron/valmix/assets/1189580/1d50ccf5-9bb2-4a73-95e3-9f3345a91311)
+
+Useful for instance to [tune robot behaviors](https://github.com/upkie/upkie/blob/main/examples/wheeled_balancing.py) in real-time 😉
 
 ## Installation
 
