@@ -13,13 +13,7 @@ T = Union[int, float]
 
 
 class Knob:
-    r"""Name and list values for a target quantity.
-
-    Attributes:
-        name: Display name of the value.
-        value: Actual multiprocessing synchronized shared object.
-        values: Values the internal value may take.
-    """
+    """Name and list values for a target quantity."""
 
     def __init__(
         self,
