@@ -7,12 +7,12 @@
 """Knob interface."""
 
 from multiprocessing.sharedctypes import Synchronized as Value
-from typing import Generic, Sequence, TypeVar
+from typing import Sequence, Union
 
-T = TypeVar("T")
+T = Union[int, float]
 
 
-class Knob(Generic[T]):
+class Knob:
     r"""Name and list values for a target quantity.
 
     Attributes:
