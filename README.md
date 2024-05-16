@@ -1,11 +1,15 @@
 # Valmix
 
+<img align="right" width=400 src="https://github.com/stephane-caron/valmix/assets/1189580/8cbdc436-e28d-46bf-9d1b-30effc920d1d">
+
 [![Build](https://img.shields.io/github/actions/workflow/status/stephane-caron/valmix/ci.yml?branch=main)](https://github.com/stephane-caron/valmix/actions)
 [![Documentation](https://img.shields.io/github/actions/workflow/status/stephane-caron/valmix/docs.yml?branch=main&label=docs)](https://stephane-caron.github.io/valmix/)
 [![Coverage](https://coveralls.io/repos/github/stephane-caron/valmix/badge.svg?branch=main)](https://coveralls.io/github/stephane-caron/valmix?branch=main)
 [![PyPI version](https://img.shields.io/pypi/v/valmix)](https://pypi.org/project/valmix/)
 
-Adjust numerical values from a terminal user interface.
+Adjust program parameters in real time from the terminal.
+
+Valmix gives a systematic way to tune Python program parameters from your terminal (similar to ``alsamixer`` for Linux users familiar with it). Wrap your program parameters in ``multiprocessing`` values, pass them to both your program and ``valmix.run()`` and a terminal user interface will appear 🪔 allowing you to modify parameters in real time while your program is running.
 
 ## Installation
 
