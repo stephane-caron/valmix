@@ -7,6 +7,14 @@
 
 Adjust numerical values from a terminal user interface.
 
+## Installation
+
+### From PyPI
+
+```console
+pip install valmix
+```
+
 ## Usage
 
 Suppose you have a Python program with parameters you want to tune:
@@ -62,14 +70,6 @@ This will fire up a terminal user interface (TUI) where you can tune ``kp`` and 
 ![image](https://github.com/stephane-caron/valmix/assets/1189580/1d50ccf5-9bb2-4a73-95e3-9f3345a91311)
 
 Useful for instance to [tune robot behaviors](https://github.com/upkie/upkie/blob/main/examples/wheeled_balancing.py) in real-time 😉
-
-## Installation
-
-### From PyPI
-
-```console
-pip install valmix
-```
 
 ## See also
 
