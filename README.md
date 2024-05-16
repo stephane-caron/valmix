@@ -8,6 +8,56 @@
 
 Adjust numerical values from a terminal user interface.
 
+## Usage
+
+Suppose you have a Python program with parameters you want to tune:
+
+```py
+def main(kp: float, kd: float):
+    pass  # your code here
+```
+
+Valmix gives a systematic way to tune these parameters from the command line. First, wrap your parameters in ``multiprocessing.Value``s:
+
+```py
+import multiprocessing as mp
+
+kp = mp.Value("f", 10.0)
+kd = mp.Value("f", 1.0)
+```
+
+Next, update your program to read from the multiprocessing values. For example:
+
+```py
+import numpy as np
+import time
+
+def main(kp: mp.Value, kd: mp.Value):
+    with open("/tmp/output", "w") as output:
+        for _ in range(15):
+            u = np.clip(kp.value * 1.0 + kd.value * 0.1, 5.0, 20.0)
+            output.write(f"{u}\n")
+            output.flush()
+            time.sleep(1.0)
+
+```
+
+Finally, run your program and Valmix together, specifying the tuning range for each value:
+
+```py
+    # Call the main function in a separate process
+    main_process = mp.Process(target=main, args=(kp, kd))
+    main_process.start()
+
+    # Display the terminal user interface in this process (blocking call)
+    valmix.run(
+        {
+            "kp": (kp, np.arange(0.0, 20.0, 0.5)),
+            "kd": (kd, np.arange(0.0, 10.0, 0.5)),
+        }
+    )
+```
+
 ## Installation
 
 ### From conda-forge
@@ -22,12 +72,8 @@ conda install -c conda-forge valmix
 pip install valmix
 ```
 
-## Usage
-
-...
-
 ## See also
 
-Software:
+Related software:
 
-- [Textual](https://textual.textualize.io/): Rapid Application Development framework for Python, used to build this tool.
+- [Textual](https://textual.textualize.io/): terminal user interface (TUI) framework for Python, used to build this tool.
