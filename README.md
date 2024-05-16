@@ -66,12 +66,6 @@ Useful for instance to [tune robot behaviors](https://github.com/upkie/upkie/blo
 
 ## Installation
 
-### From conda-forge
-
-```console
-conda install -c conda-forge valmix
-```
-
 ### From PyPI
 
 ```console
