@@ -9,7 +9,9 @@
 
 Adjust program parameters in real time from the terminal.
 
-Valmix gives a systematic way to tune Python program parameters from your terminal (similar to ``alsamixer`` for Linux users familiar with it). Wrap your program parameters in ``multiprocessing`` values, pass them to both your program and ``valmix.run()`` and a terminal user interface will appear 🪔 allowing you to modify parameters in real time while your program is running.
+Valmix gives a systematic way to tune Python program parameters from your terminal (similar to ``alsamixer`` for Linux users familiar with it). Wrap your parameters in ``multiprocessing`` values, pass them to both your program and ``valmix.run()``, and a terminal user interface will appear 🪔 allowing you to modify parameters in real time while your program is running.
+
+Code is shorter than words in [Usage](#usage) below :wink:
 
 ## Installation
 
