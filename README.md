@@ -1,6 +1,6 @@
 # Valmix
 
-<img align="right" width=400 src="https://github.com/stephane-caron/valmix/assets/1189580/8cbdc436-e28d-46bf-9d1b-30effc920d1d">
+<img align="right" width=400 src="https://github.com/stephane-caron/valmix/assets/1189580/280c02b9-46a4-4a61-bb42-3befd1c59879">
 
 [![Build](https://img.shields.io/github/actions/workflow/status/stephane-caron/valmix/ci.yml?branch=main)](https://github.com/stephane-caron/valmix/actions)
 [![Documentation](https://img.shields.io/github/actions/workflow/status/stephane-caron/valmix/docs.yml?branch=main&label=docs)](https://stephane-caron.github.io/valmix/)
