@@ -13,6 +13,12 @@ Code is shorter than words in [Usage](#usage) below :wink:
 
 ## Installation
 
+### From conda-forge
+
+```console
+conda install -c conda-forge valmix
+```
+
 ### From PyPI
 
 ```console
