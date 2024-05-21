@@ -82,7 +82,7 @@ class Knob:
         return self.__index
 
     @property
-    def current_value(self) -> T:
+    def value(self) -> T:
         """Get current value of the knob.
 
         Returns:
@@ -110,7 +110,7 @@ class Knob:
         Returns:
             String representation of the current value of the knob.
         """
-        v = self.current_value
+        v = self.value
         if isinstance(v, float):
             return f"{v:.2f}" if 1e-2 <= abs(v) < 100.0 else f"{v:.1e}"
-        return str(self.current_value)
+        return str(self.value)
