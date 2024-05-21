@@ -45,9 +45,9 @@ class TestKnob(unittest.TestCase):
         v = mp.Value("i", 5)
         knob = Knob("v", v, range(5, 10, 3))
         self.assertEqual(knob.value, 5)
-        knob.advance(+1)
-        self.assertEqual(knob.value, 8)
-        knob.advance(+1)
-        self.assertEqual(knob.value, 8)
-        knob.advance(+1)
-        self.assertEqual(knob.value, 8)
+        for _ in range(3):
+            knob.advance(+1)
+            self.assertEqual(knob.value, 8)
+        for _ in range(3):
+            knob.advance(-1)
+            self.assertEqual(knob.value, 5)
