@@ -64,3 +64,11 @@ class TestApp(unittest.IsolatedAsyncioTestCase):
                 self.assertEqual(self.app.focused.id, "baz")
                 await pilot.press(up_key)
                 self.assertEqual(self.app.focused.id, "foo")
+
+    async def test_quit(self):
+        async with self.app.run_test() as pilot:
+            await pilot.click("#foo")
+            self.assertEqual(self.app.focused.id, "foo")
+            self.assertTrue(self.app.is_running)
+            await pilot.press("q")
+            self.assertFalse(self.app.is_running)
