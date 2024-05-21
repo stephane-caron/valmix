@@ -40,3 +40,14 @@ class TestKnob(unittest.TestCase):
         knob.advance(-1)
         self.assertAlmostEqual(knob.value, 11.0)
         self.assertAlmostEqual(v.value, 11.0)
+
+    def test_advance_limits(self):
+        v = mp.Value("i", 5)
+        knob = Knob("v", v, range(5, 10, 3))
+        self.assertEqual(knob.value, 5)
+        knob.advance(+1)
+        self.assertEqual(knob.value, 8)
+        knob.advance(+1)
+        self.assertEqual(knob.value, 8)
+        knob.advance(+1)
+        self.assertEqual(knob.value, 8)

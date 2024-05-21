@@ -50,6 +50,10 @@ class TestApp(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(knob.value, 2)
             await pilot.press("right")
             self.assertEqual(knob.value, 5)
+            await pilot.press("right")
+            self.assertEqual(knob.value, 8)
+            await pilot.press("right")
+            self.assertEqual(knob.value, 8)
 
     async def test_knob_selection(self):
         async with self.app.run_test() as pilot:
