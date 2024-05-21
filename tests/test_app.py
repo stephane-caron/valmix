@@ -17,12 +17,23 @@ import valmix
 class TestApp(unittest.IsolatedAsyncioTestCase):
     """Tests for valmix.App."""
 
-    async def test_run(self):
-        foo = valmix.Knob("foo", mp.Value("i"), range(-10, 10, 3))
+    def setUp(self):
+        foo = valmix.Knob("foo", mp.Value("i", 0), range(-10, 10, 3))
         bar = valmix.Knob("baz", mp.Value("f"), np.arange(-1.0, 3.0, 0.1))
-        app = valmix.App([foo, bar])
-        async with app.run_test() as pilot:
+        self.app = valmix.App([foo, bar])
+
+    async def test_click(self):
+        async with self.app.run_test() as pilot:
             await pilot.click("#foo")
-            self.assertEqual(app.focused.id, "foo")
+            self.assertEqual(self.app.focused.id, "foo")
             await pilot.click("#baz")
-            self.assertEqual(app.focused.id, "baz")
+            self.assertEqual(self.app.focused.id, "baz")
+
+    async def test_decrease(self):
+        async with self.app.run_test() as pilot:
+            await pilot.click("#foo")
+            self.assertEqual(self.app.focused.id, "foo")
+            knob = self.app.query_one(f"#{self.app.focused.id}-knob").knob
+            self.assertEqual(knob.value, -1)
+            await pilot.press("h")
+            self.assertEqual(knob.value, -4)
