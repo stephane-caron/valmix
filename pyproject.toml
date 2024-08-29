@@ -33,6 +33,7 @@ dependencies = [
 keywords = ["multiprocessing", "value", "tui", "user", "interface"]
 
 [project.urls]
+Homepage = "https://github.com/stephane-caron/valmix"
 Source = "https://github.com/stephane-caron/valmix"
 Tracker = "https://github.com/stephane-caron/valmix/issues"
 Changelog = "https://github.com/stephane-caron/valmix/blob/main/CHANGELOG.md"
