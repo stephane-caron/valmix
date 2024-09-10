@@ -62,17 +62,15 @@ def main(kp: mp.Value, kd: mp.Value):
 Finally, run your program and Valmix together, specifying the tuning range for each value:
 
 ```py
-    # Call the main function in a separate process
-    main_process = mp.Process(target=main, args=(kp, kd))
-    main_process.start()
+main_process = mp.Process(target=main, args=(kp, kd))
+main_process.start()
 
-    # Display the terminal user interface in this process (blocking call)
-    valmix.run(
-        {
-            "kp": (kp, np.arange(0.0, 20.0, 0.5)),
-            "kd": (kd, np.arange(0.0, 10.0, 0.5)),
-        }
-    )
+valmix.run(
+    {
+        "kp": (kp, np.arange(0.0, 20.0, 0.5)),
+        "kd": (kd, np.arange(0.0, 10.0, 0.5)),
+    }
+)
 ```
 
 This will fire up a terminal user interface (TUI) where you can tune `kp` and `kd` while the program runs in the background:
