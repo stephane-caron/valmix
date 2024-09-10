@@ -7,7 +7,7 @@
 [![Coverage](https://coveralls.io/repos/github/stephane-caron/valmix/badge.svg?branch=main)](https://coveralls.io/github/stephane-caron/valmix?branch=main)
 [![PyPI version](https://img.shields.io/pypi/v/valmix)](https://pypi.org/project/valmix/)
 
-Valmix ("value mixer") gives a systematic way to tune Python program parameters from your terminal (similar to ``alsamixer`` for Linux users familiar with it). Wrap your parameters in ``multiprocessing`` values, pass them to both your program and ``valmix.run()``, and a terminal user interface will appear 🪔 allowing you to modify parameters in real time while your program is running.
+Valmix ("value mixer") gives a systematic way to tune Python program parameters from your terminal (similar to `alsamixer` for Linux users familiar with it). Wrap your parameters in `multiprocessing` values, pass them to both your program and `valmix.run()`, and a terminal user interface will appear 🪔 allowing you to modify parameters in real time while your program is running.
 
 Code is shorter than words in [Usage](#usage) below :wink:
 
@@ -34,7 +34,7 @@ def main(kp: float, kd: float):
     pass  # your code here
 ```
 
-Valmix gives a systematic way to tune these parameters from the command line. First, wrap your parameters in ``multiprocessing.Value``s:
+Valmix gives a systematic way to tune these parameters from the command line. First, wrap your parameters in `multiprocessing.Value`s:
 
 ```py
 import multiprocessing as mp
@@ -75,7 +75,7 @@ Finally, run your program and Valmix together, specifying the tuning range for e
     )
 ```
 
-This will fire up a terminal user interface (TUI) where you can tune ``kp`` and ``kd`` while the program runs in the background:
+This will fire up a terminal user interface (TUI) where you can tune `kp` and `kd` while the program runs in the background:
 
 ![image](https://github.com/stephane-caron/valmix/assets/1189580/1d50ccf5-9bb2-4a73-95e3-9f3345a91311)
 
