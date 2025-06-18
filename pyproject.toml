@@ -38,11 +38,60 @@ Source = "https://github.com/stephane-caron/valmix"
 Tracker = "https://github.com/stephane-caron/valmix/issues"
 Changelog = "https://github.com/stephane-caron/valmix/blob/main/CHANGELOG.md"
 
-[tool.black]
-line-length = 79
-
 [tool.flit.module]
 name = "valmix"
+
+[tool.mypy]
+ignore_missing_imports = true
+
+[tool.pixi.project]
+channels = ["conda-forge"]
+platforms = ["linux-64", "osx-64", "osx-arm64", "win-64"]
+
+[tool.pixi.dependencies]
+numpy = "*"
+python = ">=3.8"
+textual = ">=0.57.1"
+
+[tool.pixi.feature.coverage.dependencies]
+coverage = { version = "*" }
+coveralls = ">=4.0.0"
+
+[tool.pixi.feature.coverage.tasks]
+coverage-erase = "coverage erase"
+coverage-run = "coverage run -m unittest discover"
+coverage-report = "coverage report --include='valmix/**' --rcfile=pyproject.toml"
+coverage-html = "coverage html --include='valmix/*'"
+coverage = { depends-on = ["coverage-erase", "coverage-run", "coverage-report", "coverage-html"] }
+
+[tool.pixi.feature.docs]
+dependencies = { "sphinx" = ">=7.2.2", "sphinx-rtd-theme" = "*", "sphinx-favicon" = "*", "sphinx-autodoc-typehints" = "*", "furo" = ">=2023.8.17" }
+pypi-dependencies = { "sphinx-mathjax-offline" = "*" }
+
+[tool.pixi.feature.docs.tasks]
+docs-build = "sphinx-build docs _build -W"
+docs-open = { cmd = "xdg-open _build/index.html", depends-on = "docs-build" }
+
+[tool.pixi.feature.lint.dependencies]
+ruff = ">=0.2.2"
+mypy = ">=0.812"
+pylint = ">=2.8.2"
+
+[tool.pixi.feature.lint.tasks]
+mypy-check = "mypy valmix --config-file pyproject.toml"
+pylint-check = "pylint valmix --exit-zero --rcfile=pyproject.toml"
+ruff-check = "ruff check valmix"
+ruff-format-check = "ruff format --check valmix"
+lint = { depends-on = ["mypy-check", "pylint-check", "ruff-check", "ruff-format-check"] }
+
+[tool.pixi.feature.test.tasks]
+test = "python -m unittest discover --failfast"
+
+[tool.pixi.environments]
+coverage = { features = ["coverage"] }
+docs = { features = ["docs"] }
+lint = { features = ["lint"] }
+test = { features = ["test"] }
 
 [tool.ruff]
 line-length = 79
@@ -66,51 +115,3 @@ ignore = [
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"
-
-[tool.mypy]
-ignore_missing_imports = true
-
-[tool.pixi.project]
-channels = ["conda-forge"]
-platforms = ["linux-64", "osx-64", "osx-arm64", "win-64"]
-
-[tool.pixi.dependencies]
-python = ">=3.8"
-numpy = "*"
-
-[tool.pixi.tasks]
-test = "python -m unittest discover --failfast"
-
-[tool.pixi.environments]
-default = { features = ["test"] }
-coverage = { features = ["test", "coverage"] }
-lint = { features = ["test", "lint"] }
-
-[tool.pixi.feature.test.dependencies]
-python = ">=3.8"
-numpy = "*"
-
-[tool.pixi.feature.coverage.dependencies]
-coverage = { version = "*" }
-numpy = "*"
-
-[tool.pixi.feature.coverage.tasks]
-coverage-erase = "coverage erase"
-coverage-run = "coverage run -m unittest discover"
-coverage-report = "coverage report --include='valmix/**' --rcfile=pyproject.toml"
-coverage-html = "coverage html --include='valmix/*'"
-coverage = { depends-on = ["coverage-erase", "coverage-run", "coverage-report", "coverage-html"] }
-
-[tool.pixi.feature.lint.dependencies]
-black = ">=22.10.0"
-ruff = ">=0.2.2"
-mypy = ">=0.812"
-pylint = ">=2.8.2"
-
-[tool.pixi.feature.lint.tasks]
-black-check = "black --check --diff valmix"
-mypy-check = "mypy valmix --config-file pyproject.toml"
-pylint-check = "pylint valmix --exit-zero --rcfile=pyproject.toml"
-ruff-check = "ruff check valmix"
-ruff-format-check = "ruff format --check valmix"
-lint = { depends-on = ["black-check", "mypy-check", "pylint-check", "ruff-check", "ruff-format-check"] }
