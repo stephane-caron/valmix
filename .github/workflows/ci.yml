@@ -53,13 +53,13 @@ jobs:
                   pixi run lint
 
     test:
-        name: "Test ${{ matrix.os }} with Python ${{ matrix.python-version }}"
+        name: "Test with ${{ matrix.pyenv }} on ${{ matrix.os }}"
         runs-on: ${{ matrix.os }}
 
         strategy:
             matrix:
                 os: [ubuntu-latest, macos-latest]
-                python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+                pyenv: [py39, py310, py311, py312]
 
         steps:
             - name: "Checkout sources"
@@ -69,13 +69,12 @@ jobs:
               uses: prefix-dev/setup-pixi@v0.8.8
               with:
                   pixi-version: v0.44.0
+                  environments: test-${{ matrix.pyenv }}
                   cache: true
 
-            - name: "Run tests for ${{ matrix.os }}"
+            - name: "Run unit tests with ${{ matrix.pyenv }} on ${{ matrix.os }}"
               run: |
-                  pixi run test
-              env:
-                  PLATFORM: ${{ matrix.os }}
+                  pixi run -e test-${{ matrix.pyenv }} test
 
     ci_success:
         name: "CI success"

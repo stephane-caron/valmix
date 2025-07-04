@@ -84,14 +84,33 @@ ruff-check = "ruff check valmix"
 ruff-format-check = "ruff format --check valmix"
 lint = { depends-on = ["mypy-check", "pylint-check", "ruff-check", "ruff-format-check"] }
 
+[tool.pixi.feature.py38]
+dependencies = { python = "3.8.*" }
+
+[tool.pixi.feature.py39]
+dependencies = { python = "3.9.*" }
+
+[tool.pixi.feature.py310]
+dependencies = { python = "3.10.*" }
+
+[tool.pixi.feature.py311]
+dependencies = { python = "3.11.*" }
+
+[tool.pixi.feature.py312]
+dependencies = { python = "3.12.*" }
+
 [tool.pixi.feature.test.tasks]
 test = "python -m unittest discover --failfast"
 
 [tool.pixi.environments]
-coverage = { features = ["coverage"] }
-docs = { features = ["docs"] }
-lint = { features = ["lint"] }
-test = { features = ["test"] }
+coverage = { features = ["py312", "coverage"], solve-group = "py312" }
+docs = { features = ["py312", "docs"], solve-group = "py312" }
+lint = { features = ["py312", "lint"], solve-group = "py312" }
+test-py38 = { features = ["py38", "test"], solve-group = "py38" }
+test-py39 = { features = ["py39", "test"], solve-group = "py39" }
+test-py310 = { features = ["py310", "test"], solve-group = "py310" }
+test-py311 = { features = ["py311", "test"], solve-group = "py311" }
+test-py312 = { features = ["py312", "test"], solve-group = "py312" }
 
 [tool.ruff]
 line-length = 79
