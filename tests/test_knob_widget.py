@@ -5,6 +5,7 @@
 
 """Unit tests for the KnobWidget widget."""
 
+import asyncio
 import multiprocessing as mp
 import unittest
 
@@ -19,6 +20,12 @@ class TestKnobWidget(unittest.TestCase):
 
     def setUp(self):
         """Set up test fixtures."""
+        # Create event loop if needed for Python 3.9 compatibility
+        try:
+            asyncio.get_event_loop()
+        except RuntimeError:
+            asyncio.set_event_loop(asyncio.new_event_loop())
+
         self.value = mp.Value("i", 5)
         self.knob = Knob("test_knob", self.value, range(0, 10, 1))
         self.widget = KnobWidget(self.knob)

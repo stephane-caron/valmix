@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Unit tests (raised coverage rate to 100%)
+- Unit test fixtures for all project classes
 
 ### Changed
 
